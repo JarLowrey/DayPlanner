@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+     "lib": [
+        "es5",
+        "es6",
+        "dom",
+        "es2018", 
+        "esnext.asynciterable"
+     ],
+     "baseUrl": "./src",
+     "paths": {            
+      "@models/*": [ "./models/*" ],
+      "@inputs/*": [ "./inputs/*" ],
+      "@factories/*": [ "./factories/*" ],
+      "@tests/*": [ "./tests/*" ],
+      "@resolvers/*": [ "./resolvers/*" ],
+      "@seeds/*": [ "./seeds/*" ],
+      "@index": [ "./index.ts" ],
+      "@util/*": [ "./util/" ],
+      "@ormconfig":[ "../ormconfig.ts" ]
+      },
+     "target": "es2018",
+     "strict": true,
+     "esModuleInterop": true,
+     "strictPropertyInitialization": false,  
+     "module": "commonjs",
+     "moduleResolution": "node",
+     "outDir": "./build",
+     "emitDecoratorMetadata": true,
+     "experimentalDecorators": true,
+     "sourceMap": true,
+     "resolveJsonModule": true
+  }
+}
