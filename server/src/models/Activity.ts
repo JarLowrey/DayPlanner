@@ -50,17 +50,7 @@ export class Activity extends UserCreatedEntity {
     @IsInt()
     @Min(Activity.MinEffectiveness)
     @Max(Activity.MaxEffectiveness)
-    satisfactionPredicted: number;
-
-    @Field()
-    @Column({
-        type: "int",
-        nullable: true
-    })
-    @IsInt()
-    @Min(Activity.MinEffectiveness)
-    @Max(Activity.MaxEffectiveness)
-    satisfactionActual: number;
+    satisfaction: number;
 
     //should be enum instead?
     @Field()
@@ -68,7 +58,7 @@ export class Activity extends UserCreatedEntity {
         type: "bool",
         nullable: true
     })
-    isForMastery: boolean; //if not for mastery, then it is for pleasure
+    purpose: boolean; //if not for mastery, then it is for pleasure
 
     @Field()
     @Column({
