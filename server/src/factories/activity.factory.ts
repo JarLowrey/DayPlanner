@@ -13,14 +13,9 @@ define(Activity, (faker: typeof Faker, context?: any) => {
     });
     schItem.descr = faker.lorem.word();
     schItem.completedWith = faker.name.firstName() + " " + faker.name.lastName();
-    schItem.satisfactionPredicted = faker.random.number({
+    schItem.satisfaction = faker.random.number({
         'min': Activity.MinEffectiveness,
         'max': Activity.MaxEffectiveness
     });
-    schItem.satisfactionActual = faker.random.number({
-        'min': Activity.MinEffectiveness,
-        'max': Activity.MaxEffectiveness
-    });
-    schItem.isForMastery = faker.random.boolean();
     return schItem;
 })

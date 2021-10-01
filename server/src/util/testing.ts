@@ -6,27 +6,25 @@ import supertest from "supertest";
 import * as http from "http";
 import { ENTITY_ID_LENGTH } from "@models/ParentEntity";
 import { factory, tearDownDatabase, useSeeding } from "typeorm-seeding";
-import { CognitiveDistortion } from "@models/DysfunctionalThought";
-import { EmotionPlacement } from "@models/EmotionResponse";
-import { ProConStringType } from "@models/ProConStr";
 var assert = require("chai").assert;
 
 export const TEST_VALID_LOGIN_GQL =
   'mutation {login(email:"test@example.com",password:"helloBUDDY1@")}';
 export const TEST_PORT = 8980;
 
-export const KeysToEnum = {
-  distortion: CognitiveDistortion,
-  emotionPlacement: EmotionPlacement,
-  proConStringType: ProConStringType,
-}
+// export const KeysToEnum = {
+//   distortion: CognitiveDistortion,
+//   emotionPlacement: EmotionPlacement,
+//   proConStringType: ProConStringType,
+// }
 
 export function convertJsonToGqlDataString(data: any) {
   let resp = "{";
   for (let key of Object.keys(data)) {
     if (data[key] != undefined) {
-      if (Object.keys(KeysToEnum).includes(key)) resp += `${key}: ${data[key]},`;
-      else resp += `${key}: ${JSON.stringify(data[key])},`;
+      // if (Object.keys(KeysToEnum).includes(key)) resp += `${key}: ${data[key]},`;
+      // else 
+      resp += `${key}: ${JSON.stringify(data[key])},`;
     }
   }
   resp = resp.slice(0, -1); //remove last comma

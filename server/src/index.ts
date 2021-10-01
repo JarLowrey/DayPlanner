@@ -2,6 +2,8 @@ const fs = require("fs");
 const dotenvRes = require("dotenv").config({
   path: "./.env." + process.env.NODE_ENV,
 });
+const listenPort = 4000;
+//http://localhost:4000/graphql
 
 import "reflect-metadata";
 import {
@@ -56,9 +58,9 @@ export async function createServer() {
   let connection;
   try {
     connection = await createConnection(ormconfig as ConnectionOptions);
-  } catch (err : any) {
+  } catch (err) {
     // If AlreadyHasActiveConnectionError occurs, return already existent connection
-    if (err.name === "AlreadyHasActiveConnectionError") {
+    if ((err as any).name === "AlreadyHasActiveConnectionError") {
       connection = getConnectionManager().get("default");
     }
   }
@@ -105,15 +107,16 @@ export async function createServer() {
 
 async function startServer() {
   let app = await createServer();
-  await app.listen({ port: 4000 });
+  await app.listen({ port: listenPort });
   console.log("Server has started!");
 }
 
 if (process.env.NODE_ENV === "dev") startServer();
 
 // how to view DB::::::::::::::;
+// create db: https://stackoverflow.com/a/26721992
 // sudo -u postgres psql
-// \c mhfit
+// \c DayPlanner
 // \dt (view all tables)
 // select date from "dysfunctional_thought";
 

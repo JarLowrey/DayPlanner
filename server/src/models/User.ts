@@ -9,25 +9,20 @@ import { LENGTH_STRING_MEDIUM, LENGTH_STRING_SMALL } from "util/encrypt";
 @Entity()
 @ObjectType({ implements: ParentEntity })
 export class User extends ParentEntity {
+  static readonly NameMaxStringLength = 100;
+  static readonly EmailMaxStringLength = 300;
   @Field()
   @Column({
     type: "varchar",
-    length: LENGTH_STRING_SMALL,
+    length: User.NameMaxStringLength,
   })
   name: string;
-
-  @Field()
-  @Column({
-    type: "varchar",
-    length: 32, //128 bits
-  })
-  encryptionKey: string;
 
   @Field()
   @IsEmail()
   @Column({
     type: "varchar",
-    length: LENGTH_STRING_MEDIUM,
+    length: User.EmailMaxStringLength,
     unique: true
   })
   email: string;
@@ -40,13 +35,6 @@ export class User extends ParentEntity {
     length: User.PasswordMaxStringLength
   })
   password: string;
-
-  @Field()
-  @Column({
-    type:"varchar",
-    length: ENTITY_ID_LENGTH+20
-  })
-  anonUserId: string;
 
   @BeforeInsert()
   async setPassword() {

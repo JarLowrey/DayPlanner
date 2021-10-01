@@ -26,7 +26,7 @@ class AddArgs {
 }
 
 @Resolver(of => Schedule)
-export class DailyActivityScheduleResolver extends BaseResolver {
+export class ScheduleResolver extends BaseResolver {
   // relations = ["userCreator","items"];
 
   @Mutation(() => Schedule)

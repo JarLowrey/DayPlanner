@@ -5,7 +5,7 @@ import { ENTITY_ID_LENGTH } from "@models/ParentEntity";
 import { ValidateNested, MaxLength,MinLength } from 'class-validator';
 import { ActivityInput } from "@inputs//ActivityInput";
 
-const BaseResolver = createBaseUserCreatedEntityResolver("DailyActivityScheduleItem", Activity as any);
+const BaseResolver = createBaseUserCreatedEntityResolver("Activity", Activity as any);
 
 @ArgsType()
 class UpdateArgs {
@@ -26,7 +26,7 @@ class AddArgs {
 }
 
 @Resolver(of => Activity)
-export class DailyActivityScheduleItemResolver extends BaseResolver {
+export class ActivityResolver extends BaseResolver {
     // relations = ["userCreator", "schedule", "schedule.userCreator"];
 
     @Mutation(() => Activity)

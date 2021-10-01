@@ -13,9 +13,53 @@ export default class ScheduleList extends Component {
             
 		};
 	  }
+	
+	componentDidMount(){
+
+		fetch(process.env.REACT_APP_API_BASE_URL + "graphql",{
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+			  'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+			  query: `mutation { login(email:"test@example.com",password:"helloBUDDY1@") }`,
+			}),
+		})
+		.then(res => res.json())
+		.then(
+		  (result) => {
+			  console.log(result)
+			  fetch(process.env.REACT_APP_API_BASE_URL + "graphql",{
+					method: 'POST',
+					credentials: 'include',
+					headers: {
+					'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+					query: `query { getAllActivity { descr } } `,
+					}),
+				})
+				.then(res => res.json())
+				.then(
+				(result) => {
+					console.log(result);
+				},
+				(error) => {
+					console.log(error);
+				}
+				)
+
+		  },
+		  (error) => {
+			  console.log(error);
+		  }
+		)
+	}
 
 	render() {
         let rows = [{
+			key:1,
 		  startingTime: new Date(),
 		  endingTime: new Date(),
 		  descr: 'asdasd',
@@ -24,11 +68,10 @@ export default class ScheduleList extends Component {
 		  isRetrospective: false,
 		  purpose:'aaa'
         }].map(x=>{
-            return (<ListItem>
+            return (<ListItem key={x.key}>
 				<ActivityRow {...x}></ActivityRow>
 			</ListItem>);
         });
-		console.log(rows)
 		return (
 			<List>
 				{rows}
