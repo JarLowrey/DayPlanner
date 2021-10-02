@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import ScheduleList from "../components/ScheduleList";
+import Schedule from "../components/Schedule";
 
 class MyComponent extends Component {
 	render() {
 		// const titleSize = this.props.isMobileSize ? "h2" : "h1";
 		return (
 			<div>
-				<ScheduleList></ScheduleList>
+				<Schedule></Schedule>
             </div>
 		);
 	}
