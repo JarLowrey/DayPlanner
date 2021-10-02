@@ -11,7 +11,7 @@ export default class ScheduleList extends Component {
 		super(props);
 		this.state = {
             
-		};
+		}; 
 	  }
 	
 	componentDidMount(){

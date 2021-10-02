@@ -55,7 +55,7 @@ async function getResolvers() {
   return resolvers;
 }
 export async function createServer() {
-  let connection;
+  let connection; 
   try {
     connection = await createConnection(ormconfig as ConnectionOptions);
   } catch (err) {
@@ -100,7 +100,13 @@ export async function createServer() {
     })
   );
 
-  server.applyMiddleware({ app });
+  server.applyMiddleware({ 
+    app,
+    cors:{ // https://stackoverflow.com/a/60679615/4180797
+      origin: process.env.CLIENT_URL,
+      credentials:true,  
+    }, 
+  });
 
   return app;
 }
