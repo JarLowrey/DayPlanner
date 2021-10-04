@@ -30,13 +30,13 @@ export class ActivityResolver extends BaseResolver {
     // relations = ["userCreator", "schedule", "schedule.userCreator"];
 
     @Mutation(() => Activity)
-    async addDailyActivityScheduleItem(@Args() args: AddArgs, @Ctx() ctx: any) {
+    async addActivity(@Args() args: AddArgs, @Ctx() ctx: any) {
         if(!args.obj.scheduleId) throw new Error("Missing schedule id");
         return super.add(args, ctx);
     }
 
     @Mutation(() => Activity)
-    async updateDailyActivityScheduleItem(@Args() args: UpdateArgs, @Ctx() ctx: any) {
+    async updateActivity(@Args() args: UpdateArgs, @Ctx() ctx: any) {
         delete args.obj.scheduleId;
         return super.update(args, ctx);
     }

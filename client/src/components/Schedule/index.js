@@ -55,7 +55,7 @@ export default class Schedule extends Component {
 					'Content-Type': 'application/json',
 					},
 					body: JSON.stringify({
-					query: `query { getAllActivity { descr } } `,
+					query: `query { getAllSchedule (date: "${ this.state.date.toISOString() }" ) { items { descr } } } `,
 					}),
 				})
 				.then(res => res.json())

@@ -34,7 +34,6 @@ export function createParentEntityResolver<T extends ParentEntity>(suffix: strin
     async getByDateQuery(@Args() args: CommonArgs, @Ctx() ctx: any): Promise<T> {
       let where = {} as any;
       if (args.date) where.date = (Between(startOfDay(args.date).toISOString(), endOfDay(args.date).toISOString()) as any);
-
       return this.getAll(where, ctx);
     }
 
@@ -43,12 +42,14 @@ export function createParentEntityResolver<T extends ParentEntity>(suffix: strin
 
       let findArgs = {} as any;
       findArgs.where = whereArgs || {};
-      
+      // findArgs.relations  = ["items"]
+
       let entities =[];
       entities = await beCastedObj.find(findArgs) as any;
       entities.forEach((e: any) => {
         this.checkCanView(ctx, e);
       });
+      console.log(entities);
       return entities;
     }
 

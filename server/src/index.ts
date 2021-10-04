@@ -124,7 +124,7 @@ if (process.env.NODE_ENV === "dev") startServer();
 // sudo -u postgres psql
 // \c DayPlanner
 // \dt (view all tables)
-// select date from "dysfunctional_thought";
+// select descr from activity where "activity"."scheduleId"='6sdCkROlyMo';
 
 export function nameofModel(modelClass:any){
   return modelClass.prototype.constructor.name;

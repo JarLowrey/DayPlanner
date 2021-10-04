@@ -30,12 +30,12 @@ export class ScheduleResolver extends BaseResolver {
   // relations = ["userCreator","items"];
 
   @Mutation(() => Schedule)
-  async addDailyActivitySchedule(@Args() args: AddArgs, @Ctx() ctx: any) {
+  async addSchedule(@Args() args: AddArgs, @Ctx() ctx: any) {
     return super.add(args, ctx);
   }
 
   @Mutation(() => Schedule)
-  async updateDailyActivitySchedule(@Args() args: UpdateArgs, @Ctx() ctx: any) {
+  async updateSchedule(@Args() args: UpdateArgs, @Ctx() ctx: any) {
     return super.update(args, ctx);
   }
 }

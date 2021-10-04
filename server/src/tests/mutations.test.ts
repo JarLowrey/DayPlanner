@@ -12,7 +12,7 @@ import {
   reqSender,
   TEST_VALID_LOGIN_GQL,
   convertJsonToGqlDataString,
-  KeysToEnum,
+  // KeysToEnum,
 } from "../util/testing";
 import { Schedule } from "@models/Schedule";
 import { getConnection, getManager } from "typeorm";
@@ -23,7 +23,7 @@ import { nameofModel } from "@index";
 export const requiredParents = {
   [nameofModel(Activity)]: {
     prop: "scheduleId",
-    classType: "DailyActivitySchedule",
+    classType: "Activity",
   },
 } as any;
 
@@ -377,7 +377,6 @@ describe("tests", function () {
 //   for (let key of keys) {
 //     let val = entity[key];
 //     let dateVal = new Date(val);
-
 //     if (key.slice(-2) != "Id" && key!="id" ) {
 //       if (typeof val == 'number') val = 99;
 //       else if (typeof val === 'boolean') val = !val;
@@ -390,13 +389,13 @@ describe("tests", function () {
 // }
 
 function setGqlEnums(entity: any) {
-  let enumProps = Object.keys(KeysToEnum) as any;
-  for (let key of Object.keys(entity)) {
-    if (enumProps.includes(key)) {
-      let vals = Object.keys((KeysToEnum as any)[key]);
-      entity[key] = vals[0];
-    }
-  }
+  // let enumProps = Object.keys(KeysToEnum) as any;
+  // for (let key of Object.keys(entity)) {
+  //   if (enumProps.includes(key)) {
+  //     let vals = Object.keys((KeysToEnum as any)[key]);
+  //     entity[key] = vals[0];
+  //   }
+  // }
 }
 
 async function addParent(x: string, loginRes: any, newEntity: any) {
