@@ -12,19 +12,17 @@ export class Activity extends UserCreatedEntity {
     static readonly MinStartingMinute = 0;
     static readonly MaxStartingMinute = 2359;
     static readonly MinEffectiveness = 0;
-    static readonly MaxEffectiveness = 100;
+    static readonly MaxEffectiveness = 4;
     static readonly DescrMaxStringLength = 100;
     static readonly CompletedWithMaxStringLength = 100;
 
-    @Field(() => Int)
-    @Column({
-        type: "int",
-        nullable: false
-    })
-    @IsInt()
-    @Min(Activity.MinStartingMinute)
-    @Max(Activity.MaxStartingMinute)
-    startingMinute: number;
+    @Field()  
+    @Column('time', { nullable: false })
+    startingTime: string;
+
+    @Field()  
+    @Column('time', { nullable: false })
+    endingTime: string;
 
     @Field()
     @Column({

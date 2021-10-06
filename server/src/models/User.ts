@@ -36,6 +36,14 @@ export class User extends ParentEntity {
   })
   password: string;
 
+  @Field()
+  @Column('time', {default: "07:00:00"})
+  defaultBedTime: string;
+
+  @Field()
+  @Column('time', {default: "22:30:00"})
+  defaultAwakeTime: string;
+
   @BeforeInsert()
   async setPassword() {
     let passesAllValidation = this.password.match(/.*\d.*/) != null;

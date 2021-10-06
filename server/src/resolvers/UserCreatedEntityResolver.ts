@@ -16,13 +16,6 @@ export function createBaseUserCreatedEntityResolver<T extends UserCreatedEntity>
       return super.get(args,ctx);
     }
 
-    async getAll(whereArgs: any, ctx: any): Promise<T> {
-      this.checkForLogin(ctx);
-      if(!whereArgs) whereArgs = {} as any;
-      whereArgs.userCreatorId = ctx.req.session.userId;
-      return super.getAll(whereArgs,ctx);
-    }
-
     async add(args: any, ctx: any): Promise<T> {
       this.checkForLogin(ctx);
       args.obj.userCreatorId = ctx.req.session.userId;

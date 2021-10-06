@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "dev": "NODE_PATH=./src DEBUG=express:* NODE_ENV=dev nodemon -w src --ext ts --exec node --inspect -r tsconfig-paths/register -r ts-node/register src/index.ts",
+    "start": "NODE_PATH=./src DEBUG=express:* NODE_ENV=dev nodemon -w src --ext ts --exec node --inspect -r tsconfig-paths/register -r ts-node/register src/index.ts",
     "seed:config": "NODE_ENV=dev ts-node -r tsconfig-paths/register ./node_modules/typeorm-seeding/dist/cli.js config",
     "seed:run": "NODE_ENV=dev ts-node -r tsconfig-paths/register ./node_modules/typeorm-seeding/dist/cli.js seed",
     "seed:reset": "npm run schema:drop && npm run seed:run",

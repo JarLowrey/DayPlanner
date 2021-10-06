@@ -10,7 +10,7 @@ export class ActivityInput {
     @IsInt()
     @Min(Activity.MinStartingMinute)
     @Max(Activity.MaxStartingMinute)
-    startingMinute: number;
+    startingTime: number;
 
     @Field()
     @MaxLength(Activity.DescrMaxStringLength)

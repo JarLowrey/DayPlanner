@@ -13,12 +13,6 @@ export class GetOneArgs {
   id: string;
 }
 
-@ArgsType()
-export class CommonArgs {
-  @Field({ nullable: true })
-  date: Date;
-}
-
 export function createParentEntityResolver<T extends ParentEntity>(suffix: string, objectTypeCls: T) {
   @Resolver({ isAbstract: true })
   abstract class BaseResolver {
@@ -28,29 +22,6 @@ export function createParentEntityResolver<T extends ParentEntity>(suffix: strin
       let entity = await beCastedObj.findOne({ where: args }) as any;
       this.checkCanView(ctx, entity);
       return entity;
-    }
-
-    @Query(type => [objectTypeCls], { name: `getAll${suffix}` })
-    async getByDateQuery(@Args() args: CommonArgs, @Ctx() ctx: any): Promise<T> {
-      let where = {} as any;
-      if (args.date) where.date = (Between(startOfDay(args.date).toISOString(), endOfDay(args.date).toISOString()) as any);
-      return this.getAll(where, ctx);
-    }
-
-    async getAll(whereArgs: any, ctx: any): Promise<T> {
-      let beCastedObj = (<typeof ParentEntity>(objectTypeCls as any));
-
-      let findArgs = {} as any;
-      findArgs.where = whereArgs || {};
-      // findArgs.relations  = ["items"]
-
-      let entities =[];
-      entities = await beCastedObj.find(findArgs) as any;
-      entities.forEach((e: any) => {
-        this.checkCanView(ctx, e);
-      });
-      console.log(entities);
-      return entities;
     }
 
     async add(args: any, ctx: any): Promise<T> {

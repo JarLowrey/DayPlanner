@@ -7,25 +7,9 @@ import ActivityRow from "../ActivityRow";
 export default class ScheduleList extends Component {
 	static MaxEndingMinute = 2359;
 
-	constructor(props) {
-		super(props);
-		this.state = {
-            
-		}; 
-	  }
-
 	render() {
-        let rows = [{
-			key:1,
-		  startingTime: new Date(),
-		  endingTime: new Date(),
-		  descr: 'asdasd',
-		  completedWith: 'asd',
-		  satisfaction: 0,
-		  isRetrospective: false,
-		  purpose:'aaa'
-        }].map(x=>{
-            return (<ListItem key={x.key}>
+		let rows = this.props.rows.map(x=>{
+            return (<ListItem key={x.id}>
 				<ActivityRow {...x}></ActivityRow>
 			</ListItem>);
         });
