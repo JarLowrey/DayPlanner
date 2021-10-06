@@ -14,7 +14,6 @@ export class Activity extends UserCreatedEntity {
     static readonly MinEffectiveness = 0;
     static readonly MaxEffectiveness = 4;
     static readonly DescrMaxStringLength = 100;
-    static readonly CompletedWithMaxStringLength = 100;
 
     @Field()  
     @Column('time', { nullable: false })
@@ -34,11 +33,10 @@ export class Activity extends UserCreatedEntity {
 
     @Field()
     @Column({
-        type: "varchar",
-        length: Activity.CompletedWithMaxStringLength,
-        nullable: false
+        type: "bool",
+        nullable: true
     })
-    completedWith: string;
+    completedWithGroup: boolean;
 
     @Field()
     @Column({
@@ -50,13 +48,24 @@ export class Activity extends UserCreatedEntity {
     @Max(Activity.MaxEffectiveness)
     satisfaction: number;
 
+    @Field()
+    @Column({
+        type: "int",
+        nullable: true
+    })
+    @IsInt()
+    @Min(Activity.MinEffectiveness)
+    @Max(Activity.MaxEffectiveness)
+    difficulty: number;
+
+
     //should be enum instead?
     @Field()
     @Column({
-        type: "bool",
+        type: "int",
         nullable: true
     })
-    purpose: boolean; //if not for mastery, then it is for pleasure
+    purpose: number; //if not for mastery, then it is for pleasure
 
     @Field()
     @Column({

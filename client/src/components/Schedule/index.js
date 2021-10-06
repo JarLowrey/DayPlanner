@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import DatePicker from 'react-date-picker'
 import ScheduleList from "../ScheduleList";
 
 import IconButton from '@mui/material/IconButton';
@@ -8,6 +7,11 @@ import ChevronRight from '@mui/icons-material/ChevronRight';
 import ChevronLeft from '@mui/icons-material/ChevronLeft';
 import addDays from 'date-fns/addDays';
 import CircularProgress from '@mui/material/CircularProgress';
+import TextField from '@mui/material/TextField';
+
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 
 export default class Schedule extends Component {
 
@@ -51,26 +55,16 @@ export default class Schedule extends Component {
 		.then(res => res.json())
 		.then(
 		  (result) => {
-			  console.log(result)
+			  let query =  `query { getSchedulesFromDate (date: "${ this.state.date.toISOString() }" ) { items { id,startingTime, endingTime, descr, completedWithGroup, satisfaction, difficulty, isRetrospective } } } `;
+			 console.log(query); 
 			  fetch(process.env.REACT_APP_API_BASE_URL + "graphql",{
-					method: 'POST',
-					credentials: 'include',
-					headers: {
-					'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-
-
-			// id
-			// startingTime: new Date(),
-			// endingTime: new Date(),
-			// descr: 'asdasd',
-			// completedWith: 'asd',
-			// satisfaction: 0,
-			// isRetrospective: false,
-			// purpose:'aaa'
-
-					query: `query { getSchedulesFromDate (date: "${ this.state.date.toISOString() }" ) { items { id,startingTime, endingTime, descr, completedWith, satisfaction, isRetrospective } } } `,
+						method: 'POST',
+						credentials: 'include',
+						headers: {
+						'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+						query: query,
 					}),
 				})
 				.then(res => res.json())
@@ -82,7 +76,10 @@ export default class Schedule extends Component {
 					}else{
 						activities = Schedule.getNewSchedule();
 					}
+					let date = '01/01/2021 ';
+					activities.sort((x,y)=>new Date(date+x.startingTime) - new Date(date+y.startingTime));
 					this.setState({activities: activities, isLoading:false});
+					console.log(activities);
 				},
 				(error) => {
 					console.log(error);
@@ -105,7 +102,7 @@ export default class Schedule extends Component {
 
 		let defaultActivities = {
 				descr: "",
-				completedWith:"",
+				completedWithGroup:"",
 				purpose: false,
 				isRetrospective: false,
 		};
@@ -114,10 +111,9 @@ export default class Schedule extends Component {
 		let endHr = parseInt(defaultAsleep.split(":"));
 		let activities = [];
 		for(let i=startHr;i<endHr;i++){
-			activities.push(Object.assign({ id:i+"1", startingTime: i+":00:00", endingTime: i+":30:00" }, defaultActivities))
-			activities.push(Object.assign({ id:i+"2", startingTime: i+":30:00", endingTime: (i+1)+":00:00" }, defaultActivities))
+			activities.push(Object.assign({ id:i+"1", startingTime: i+":00:00", endingTime: (i+1)+":00:00" }, defaultActivities))
+			// activities.push(Object.assign({ id:i+"2", startingTime: i+":30:00", endingTime: (i+1)+":00:00" }, defaultActivities))
 		}
-		console.log(activities)
 		return activities;
 	}
 
@@ -125,7 +121,7 @@ export default class Schedule extends Component {
 		let body = !this.isLoading ? <ScheduleList  rows={this.state.activities} /> : (<div style={{margin:"auto", width:"55px"}}> <CircularProgress /> </div>);
 		return (
             <div>
-                <div style={{ margin:"auto", width:"250px"}}>
+                <div style={{ margin:"20px auto", width:"247px"}}>
                     <IconButton
                         color="inherit"
                         aria-label="Move back one day"
@@ -134,14 +130,17 @@ export default class Schedule extends Component {
                         <ChevronLeft />
                     </IconButton>
 
-                    <DatePicker 
-						clearIcon={null}
-						calendarIcon={null}
-                        onChange={this.userChangedDay}
-                        value={this.state.date}
-                        // maxDate={endOfTomorrow()}
-                        // minDate={new Date(2021,1,10)}
-                      />
+
+					<LocalizationProvider dateAdapter={AdapterDateFns}>
+						<DatePicker
+							label=""
+							value={this.state.date}
+							onChange={this.userChangedDay}
+							// maxDate={endOfTomorrow()}
+                        	// minDate={new Date(2021,1,10)}
+							renderInput={(params) => <TextField style={{width:"160px"}} {...params} />}
+						/>
+					</LocalizationProvider>
 
                     <IconButton
                         color="inherit"

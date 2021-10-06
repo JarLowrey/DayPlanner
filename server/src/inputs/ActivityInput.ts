@@ -18,8 +18,7 @@ export class ActivityInput {
 
     //pleasure Predicting fields
     @Field()
-    @MaxLength(Activity.CompletedWithMaxStringLength)
-    completedWith: string;
+    completedWithGroup: boolean;
 
     @Field()
     @IsInt()

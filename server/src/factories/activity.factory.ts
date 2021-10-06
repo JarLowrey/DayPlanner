@@ -11,8 +11,12 @@ define(Activity, (faker: typeof Faker, context?: any) => {
     schItem.startingTime = startHr+ ":00:00";
     schItem.endingTime = startHr + ":30:00";
     schItem.descr = faker.lorem.word();
-    schItem.completedWith = faker.name.firstName() + " " + faker.name.lastName();
+    schItem.completedWithGroup = false;
     schItem.satisfaction = faker.random.number({
+        'min': Activity.MinEffectiveness,
+        'max': Activity.MaxEffectiveness
+    });
+    schItem.difficulty = faker.random.number({
         'min': Activity.MinEffectiveness,
         'max': Activity.MaxEffectiveness
     });
