@@ -6,34 +6,40 @@ import { ENTITY_ID_LENGTH } from '@models/ParentEntity';
 
 @InputType()
 export class ActivityInput {
-    @Field(() => Int)
-    @IsInt()
-    @Min(Activity.MinStartingMinute)
-    @Max(Activity.MaxStartingMinute)
-    startingTime: number;
+    @Field({nullable:true})
+    startingTime: string;
 
-    @Field()
+    @Field({nullable:true})
+    endingTime: string;
+    
+    @Field({nullable:true})
     @MaxLength(Activity.DescrMaxStringLength)
-    prospectiveTask: string;
+    descr: string;
 
-    //pleasure Predicting fields
-    @Field()
+    
+    @Field({nullable:true})
     completedWithGroup: boolean;
 
-    @Field()
+    @Field({nullable:true})
+    isRetrospective: boolean;
+
+    @Field({nullable:true})
     @IsInt()
     @Min(Activity.MinEffectiveness)
     @Max(Activity.MaxEffectiveness)
-    satisfactionPredicted: number;
+    satisfaction: number;
 
-    @Field()
+    @Field({nullable:true})
     @IsInt()
     @Min(Activity.MinEffectiveness)
     @Max(Activity.MaxEffectiveness)
-    satisfactionActual: number;
+    difficulty: number;
 
-    @Field()
-    isForMastery: boolean; //if not for mastery, then it is for pleasure
+    @Field({nullable:true})
+    @IsInt()
+    @Min(0)
+    @Max(100)
+    purpose: number;
 
     @Field({nullable:true})
     @MaxLength(ENTITY_ID_LENGTH)

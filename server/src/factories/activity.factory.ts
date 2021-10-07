@@ -20,5 +20,9 @@ define(Activity, (faker: typeof Faker, context?: any) => {
         'min': Activity.MinEffectiveness,
         'max': Activity.MaxEffectiveness
     });
+    schItem.purpose = faker.random.number({
+        'min': 0,
+        'max': 100
+    });
     return schItem;
 })

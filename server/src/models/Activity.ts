@@ -65,6 +65,8 @@ export class Activity extends UserCreatedEntity {
         type: "int",
         nullable: true
     })
+    @Min(0)
+    @Max(100)
     purpose: number; //if not for mastery, then it is for pleasure
 
     @Field()

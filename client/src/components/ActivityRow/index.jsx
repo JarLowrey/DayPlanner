@@ -13,6 +13,8 @@ import TimePicker from '@mui/lab/TimePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
+import { callServerDebounced,getTimeFromDate } from "../../utils/util";
+
 export default class ActivityRow extends Component {
 	static MaxEndingMinute = 2359;
 
@@ -36,23 +38,39 @@ export default class ActivityRow extends Component {
 		this.difficultyChanged = this.difficultyChanged.bind(this);
 		this.completedWithGroupChanged = this.completedWithGroupChanged.bind(this);
 		this.descrChanged = this.descrChanged.bind(this);
-	  }
+		this.updateActivity = this.updateActivity.bind(this);
+	}
 
-	startingTimeChanged(newVal){ 		this.setState({ startingTime: newVal });  }
-	endingTimeChanged(newVal){ 			this.setState({ endingTime: newVal });  }
-	purposeChanged(event){ 				this.setState({ purpose: event.target.value });  }
-	isRetroChanged(event){ 				this.setState({ isRetrospective: event.target.value });  }
-	satisfactionChanged(event){  		this.setState({ satisfaction: event.target.value });  }
-	difficultyChanged(event){  			this.setState({ difficulty: event.target.value });  }
-	completedWithGroupChanged(event){	this.setState({ completedWithGroup: event.target.value });  }
-	descrChanged(event){  				this.setState({ descr: event.target.value });  }
-
+	startingTimeChanged(newVal){ 		this.setState({ startingTime: newVal }, this.updateActivity);  }
+	endingTimeChanged(newVal){ 			this.setState({ endingTime: newVal }, this.updateActivity);  }
+	purposeChanged(event){ 				this.setState({ purpose: event.target.value }, this.updateActivity);  }
+	isRetroChanged(event){ 				this.setState({ isRetrospective: event.target.value }, this.updateActivity);  }
+	satisfactionChanged(event){  		this.setState({ satisfaction: event.target.value }, this.updateActivity);  }
+	difficultyChanged(event){  			this.setState({ difficulty: event.target.value }, this.updateActivity);  }
+	completedWithGroupChanged(event){	this.setState({ completedWithGroup: event.target.value }, this.updateActivity);  }
+	descrChanged(event){  				this.setState({ descr: event.target.value }, this.updateActivity);  }
 
 	static valueLabelFormat(value) {	
 		return `${value}% Pleasure, ${100-value}% Mastery`;
 	}
-
 	
+	async updateActivity(){
+		let stateCopy = Object.assign({},this.state);
+		stateCopy.startingTime = getTimeFromDate(stateCopy.startingTime);
+		stateCopy.endingTime = getTimeFromDate(stateCopy.endingTime);
+		let q = `mutation { updateActivity (existingObjId: "${this.props.id}", obj: {
+			startingTime: "${stateCopy.startingTime}",
+			endingTime: "${stateCopy.endingTime}",
+			descr: "${stateCopy.descr}",
+			completedWithGroup: ${stateCopy.completedWithGroup},
+			satisfaction: ${stateCopy.satisfaction},
+			difficulty: ${stateCopy.difficulty},
+			isRetrospective: ${stateCopy.isRetrospective},
+			purpose: ${stateCopy.purpose},
+		}) {id}}`;
+		await callServerDebounced(q);
+		await this.props.reloadActivities();
+	}
 	
 	render() {
 		const showMinInterface = false;
@@ -69,6 +87,8 @@ export default class ActivityRow extends Component {
 							<Slider 
 								sx={{'.MuiSlider-rail':{opacity:1}, '.MuiSlider-track':{height:"2px"}, '.MuiSlider-markLabel': {color:"rgba(0, 0, 0, 0.87)"}}} 
 								defaultValue={50} aria-label="Default" 
+								onChange={this.purposeChanged}
+								value={this.state.purpose}
 								valueLabelDisplay="auto" valueLabelFormat={ActivityRow.valueLabelFormat} 
 								marks={[{value:0, label:"Pleasure"}, {value:100, label:"Mastery"}]}
 								step={5}

@@ -18,7 +18,7 @@ export default class EmotionSelector extends Component {
                             label={this.props.title}
                             onChange={this.props.onChange}
                         >
-                            <MenuItem value={0}>☹️</MenuItem>
+                            <MenuItem value={0}>😩</MenuItem>
                             <MenuItem value={1}>🙁</MenuItem>
                             <MenuItem value={2}>😐</MenuItem>
                             <MenuItem value={3}>🙂</MenuItem>
