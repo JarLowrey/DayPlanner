@@ -23,6 +23,7 @@ const theme = createTheme({
     secondary: {
       main: '#f44336',
     },
+    text:{primary: 'rgba(232, 230, 227, 0.87)'},
 	}
 });
 

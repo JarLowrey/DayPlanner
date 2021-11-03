@@ -4,10 +4,12 @@ import React, { Component } from "react";
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import EmotionSelector from "../EmotionSelector";
+import EmojiSelector from "../EmojiSelector";
 import FormControl from '@mui/material/FormControl';
 import Slider from '@mui/material/Slider';
 import Box from '@mui/material/Box';
+
+import { max as dateMax, min as dateMin} from 'date-fns';
 
 import TimePicker from '@mui/lab/TimePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -76,8 +78,8 @@ export default class ActivityRow extends Component {
 		const showMinInterface = false;
 		let additionalInputs = (showMinInterface) ? null : (
 			<div>
-				<EmotionSelector onChange={this.satisfactionChanged} value={this.state.satisfaction} title="Pride 🥇" />
-				<EmotionSelector onChange={this.difficultyChanged} value={this.state.difficulty} title="Labor ⚙️" />
+				<EmojiSelector onChange={this.satisfactionChanged} value={this.state.satisfaction} title="Pride 🥇" />
+				<EmojiSelector isSize onChange={this.difficultyChanged} value={this.state.difficulty} title="Labor ⚙️" />
 
 				<FormControl style={{padding:"0 40px"}}>
 					<FormControlLabel

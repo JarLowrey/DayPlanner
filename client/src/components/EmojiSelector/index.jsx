@@ -5,8 +5,13 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 
-export default class EmotionSelector extends Component {
+export default class EmojiSelector extends Component {
+    emotions =  ['😩','🙁','😐,','🙂','😀'];
+    sizes =     ['🐁','🐈','🐕','🦏','🐘'];
+
 	render() {
+        let emojiArr = this.props.isSize ? this.sizes : this.emotions;
+        emojiArr = emojiArr.map((x,i)=> <MenuItem value={i}>{x}</MenuItem> );
 		return (
             <FormControl style={{minWidth:"95px"}}>
 					<FormControlLabel
@@ -18,12 +23,9 @@ export default class EmotionSelector extends Component {
                             label={this.props.title}
                             onChange={this.props.onChange}
                         >
-                            <MenuItem value={0}>😩</MenuItem>
-                            <MenuItem value={1}>🙁</MenuItem>
-                            <MenuItem value={2}>😐</MenuItem>
-                            <MenuItem value={3}>🙂</MenuItem>
-                            <MenuItem value={4}>😀</MenuItem>
-                        </Select>						}
+                            {emojiArr}
+                        </Select>						
+                        }
 						label={this.props.title}
 						labelPlacement="top"
 						/>

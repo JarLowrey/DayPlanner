@@ -58,7 +58,7 @@ export default class Schedule extends Component {
 		let date = '01/01/2021 ';
 		activities.sort((x,y)=>new Date(date+x.startingTime) - new Date(date+y.startingTime));
 		this.setState({activities: activities, isLoading:false});
-		console.log(activities)
+		console.log(activities);
 	}
 	userChangedDay(d){
 		this.setState({ date: d });
